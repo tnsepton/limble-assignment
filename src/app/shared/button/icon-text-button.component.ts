@@ -1,17 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'icon-button',
+  selector: 'icon-text-button',
   template: `
-    <button>
+    <button class="main-btn">
       <svg-icon icon={{icon}}></svg-icon>
-      {{text}}
+      <ng-content></ng-content>
     </button>
   `
 })
-export class IconButtonComponent implements OnInit {
+export class IconTextButtonComponent implements OnInit {
   @Input() icon: string = '';
-  @Input() text: string = '';
 
   constructor() { }
 

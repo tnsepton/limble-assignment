@@ -8,9 +8,15 @@
         ></app-comment>
     </div>
     <div class="composer">
-        <icon-button
+        <icon-text-button
+            *ngIf="!commenting"
             icon="chatBubble"
-            text="Add Comment"
-        ></icon-button>
+            (click)="toggleCommentState()"
+        >Add Comment</icon-text-button>
+        <app-comment-composer
+            *ngIf="commenting"
+            [closeButton]="true"
+            (onCloseEvent)="toggleCommentState()"
+        ></app-comment-composer>
     </div>
 </div>

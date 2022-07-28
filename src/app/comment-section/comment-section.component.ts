@@ -9,6 +9,7 @@ import { CommentService } from '../comment.service';
 })
 export class CommentSectionComponent implements OnInit {
   comments: Comment[] = [];
+  commenting: boolean = false;
 
   constructor(private commentService: CommentService) { }
 
@@ -18,6 +19,10 @@ export class CommentSectionComponent implements OnInit {
 
   fetchComments(): void {
     this.comments = this.commentService.getComments();
+  }
+
+  toggleCommentState(): void {
+    this.commenting = !this.commenting;
   }
 
 }
