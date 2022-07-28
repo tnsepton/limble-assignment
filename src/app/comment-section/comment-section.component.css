@@ -1,3 +1,8 @@
 .comments-list {
     padding: 15px 0;
 }
+
+.composer {
+    display: flex;
+    justify-content: flex-end;
+}
