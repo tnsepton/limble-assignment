@@ -3,6 +3,6 @@ import { User } from "./user"
 export interface Comment {
   id: number,
   createdAt: string,
-  comment: string,
+  body: string,
   author: User
 }

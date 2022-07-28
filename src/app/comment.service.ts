@@ -9,7 +9,7 @@ export class CommentService {
     {
         id: 1,
         createdAt: '2022-07-27 10:04:48',
-        comment: 'I created this task to be done.',
+        body: 'I created this task to be done.',
         author: {
           id: 1,
           name: 'Kevin'
@@ -18,7 +18,7 @@ export class CommentService {
     {
       id: 2,
       createdAt: '2022-07-27 10:52:29',
-      comment: 'This task is definitely a task that I will do.',
+      body: 'This task is definitely a task that I will do.',
       author: {
         id: 2,
         name: 'Jeff'
