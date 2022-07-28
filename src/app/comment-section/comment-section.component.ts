@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Comment } from '../comment';
+import { CommentService } from '../comment.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comment-section.component.css']
 })
 export class CommentSectionComponent implements OnInit {
+  comments: Comment[] = [];
 
-  constructor() { }
+  constructor(private commentService: CommentService) { }
 
   ngOnInit(): void {
+    this.fetchComments();
+  }
+
+  fetchComments(): void {
+    this.comments = this.commentService.getComments();
   }
 
 }
