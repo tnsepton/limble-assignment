@@ -4,7 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <div id="main-container">
+      <hr>
       <app-comment-section></app-comment-section>
+      <hr>
     </div>
   `,
   styleUrls: ['./app.component.css']

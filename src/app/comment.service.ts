@@ -18,10 +18,19 @@ export class CommentService {
     {
       id: 2,
       createdAt: '2022-07-27 10:52:29',
-      body: 'This task is definitely a task that I will do.',
+      body: 'This task is definitely a task, and I will do it.',
       author: {
         id: 2,
         name: 'Jeff'
+      }
+    },
+    {
+      id: 3,
+      createdAt: '2022-07-27 13:34:21',
+      body: 'Cool thanks for tasking so well.',
+      author: {
+        id: 1,
+        name: 'Kevin'
       }
     }
   ]

@@ -1,6 +1,10 @@
-<div id="comment-section">
+<div class="comment-section">
     <div class="comments-list">
         <h5>Comments:</h5>
-        <!-- <comment-item *ngFor></comment-item> -->
+        <app-comment
+            *ngFor="let comment of comments; last as isLast"
+            [comment]="comment"
+            [isLast]="isLast"
+        ></app-comment>
     </div>
 </div>

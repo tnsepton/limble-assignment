@@ -1,0 +1,10 @@
+<div class="comment-container">
+    <div class="body">
+        <svg-icon icon="chatBubble"></svg-icon>
+        {{comment.body}}
+    </div>
+    <div class="details">
+        {{comment.author.name}} - {{comment.createdAt | date:'yyyy/mm/dd h:mm a' }}
+    </div>
+</div>
+<hr *ngIf="!isLast">
