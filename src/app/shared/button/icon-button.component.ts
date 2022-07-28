@@ -7,8 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
       <svg-icon icon={{icon}}></svg-icon>
       {{text}}
     </button>
-  `,
-  styleUrls: ['./icon-button.component.css']
+  `
 })
 export class IconButtonComponent implements OnInit {
   @Input() icon: string = '';
