@@ -8,11 +8,15 @@
         (input)="handleInput($event)"
         (keydown)="handleKeydown($event)"
     ></div>
-    <select *ngIf="tagSuggestions.length > 0"
-        name="tagging"
+    <div class="tag-suggestions"
+        *ngIf="tagSuggestions.length > 0"
     >
-        <option value="1">Kevin</option>
-    </select>
+        <select-list
+            title="Users"
+            [options]="tagSuggestions"
+            (onSelect)="tagUser($event)"
+        ></select-list>
+    </div>
     <div class="button-container">
         <icon-button
             type="submit"

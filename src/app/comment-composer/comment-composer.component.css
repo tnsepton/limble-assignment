@@ -3,6 +3,7 @@
 }
 
 .composer-container {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -20,6 +21,13 @@
 
 .composer:focus {
     outline: none;
+}
+
+.tag-suggestions {
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 0;
+    right: 0;
 }
 
 .button-container {

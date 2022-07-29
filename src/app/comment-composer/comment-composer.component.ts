@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Comment, emptyComment } from '../comment';
+import { Option } from '../shared/forms/select-list/option';
 import { User } from '../user';
 import { UserService } from '../user.service';
 
@@ -17,7 +18,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   @ViewChild('composer') composerElement!: ElementRef;
 
   comment: Comment = emptyComment();
-  tagSuggestions: User[] = [];
+  tagSuggestions: Option[] = [];
 
   constructor(private userService: UserService) { }
 
@@ -26,17 +27,29 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-      this.composerElement.nativeElement.focus();
+    this.composerElement.nativeElement.focus();
+  }
+
+  setTagSuggestions(tagSuggestions: User[]): void {
+    let options: Option[] = [];
+    for(let tagSuggestion of tagSuggestions) {
+      options.push({
+        value: tagSuggestion,
+        label: tagSuggestion.name
+      })
+    }
+
+    this.tagSuggestions = options;
   }
 
   handleInput(e: any): void {
     let tagSearchString = this.getTagSearchString();
     if(typeof tagSearchString === 'string') {
-      this.tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
-      console.log(this.tagSuggestions);
+      let tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
+      this.setTagSuggestions(tagSuggestions);
     }
     else {
-      this.tagSuggestions = [];
+      this.setTagSuggestions([]);
     }
 
     this.comment.body = e.target.textContent;
@@ -89,6 +102,11 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
   closeComposer(): void {
     this.onCloseEvent.emit();
+  }
+
+  tagUser(user: User): void {
+    alert(user.name + ' selected!');
+    this.setTagSuggestions([]);
   }
 
 }

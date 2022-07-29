@@ -1,0 +1,9 @@
+<div class="select-list">
+    <h5 *ngIf="title">{{title}}</h5>
+    <div class="list-container">
+        <div class="option"
+            *ngFor="let option of options"
+            (click)="selectOption(option.value)"
+        >{{option.label}}</div>
+    </div>
+</div>

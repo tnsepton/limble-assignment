@@ -1,0 +1,26 @@
+.select-list {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+h5 {
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.list-container {
+    max-height: 90px;
+    overflow: auto;
+}
+
+.option {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #f5f5f5;
+}
