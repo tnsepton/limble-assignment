@@ -7,7 +7,7 @@
         [textContent]="comment.body"
         (input)="handleInput($event)"
     ></div>
-    <select
+    <select *ngIf="tagSuggestions.length > 0"
         name="tagging"
     >
         <option value="1">Kevin</option>

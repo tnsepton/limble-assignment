@@ -40,6 +40,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
       this.tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
       console.log(this.tagSuggestions);
     }
+    else {
+      this.tagSuggestions = [];
+    }
 
     this.comment.body = e.target.textContent;
   }
