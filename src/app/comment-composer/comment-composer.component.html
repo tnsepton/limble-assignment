@@ -6,6 +6,7 @@
         class="composer"
         [textContent]="comment.body"
         (input)="handleInput($event)"
+        (keydown)="handleKeydown($event)"
     ></div>
     <select *ngIf="tagSuggestions.length > 0"
         name="tagging"

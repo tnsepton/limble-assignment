@@ -30,11 +30,6 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   handleInput(e: any): void {
-    if(e.type === 'insertParagraph') {
-      this.addComment(e);
-      return;
-    }
-
     let tagSearchString = this.getTagSearchString();
     if(typeof tagSearchString === 'string') {
       this.tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
@@ -72,6 +67,12 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     }
 
     return false;
+  }
+
+  handleKeydown(e: any): void {
+    if(e.which === 13) {
+      this.addComment(e);
+    }
   }
 
   addComment(e: any): void {
