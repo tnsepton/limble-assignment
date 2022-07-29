@@ -1,13 +1,17 @@
 <form class="composer-container"
     (ngSubmit)="addComment($event);"
 >
-    <textarea #composer
-        required
-        name="comment"
+    <div #composer
+        contenteditable
         class="composer"
-        [(ngModel)]="comment.body"
-        (keypress)="handleKeypress($event)"
-    ></textarea>
+        [textContent]="comment.body"
+        (input)="handleInput($event)"
+    ></div>
+    <select
+        name="tagging"
+    >
+        <option value="1">Kevin</option>
+    </select>
     <div class="button-container">
         <icon-button
             type="submit"

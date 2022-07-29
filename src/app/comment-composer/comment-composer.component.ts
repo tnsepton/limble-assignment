@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Comment, emptyComment } from '../comment';
+import { User } from '../user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-comment-composer',
@@ -15,8 +17,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   @ViewChild('composer') composerElement!: ElementRef;
 
   comment: Comment = emptyComment();
+  tagSuggestions: User[] = [];
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -26,11 +29,46 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
       this.composerElement.nativeElement.focus();
   }
 
-  handleKeypress(e: any): void {
-    if(e.keyCode === 13) {
+  handleInput(e: any): void {
+    if(e.type === 'insertParagraph') {
       this.addComment(e);
       return;
     }
+
+    let tagSearchString = this.getTagSearchString();
+    if(typeof tagSearchString === 'string') {
+      this.tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
+      console.log(this.tagSuggestions);
+    }
+
+    this.comment.body = e.target.textContent;
+  }
+
+  getTagSearchString(): string | boolean {
+    let range = window.getSelection()?.getRangeAt(0);
+    let start = range?.startOffset || 0;
+    let textContent = range?.startContainer.textContent || '';
+    let searchString = '';
+    let char = '';
+    let i = 1;
+    let pos = start - 1;
+
+    while(i <= 25 && pos >= 0) {
+      char = textContent[pos];
+      if(char === '@') {
+        if(pos === 0 || textContent[pos - 1] === ' ') {
+          return searchString;
+        }
+
+        return false;
+      }
+
+      searchString = char + searchString;
+      i++;
+      pos--;
+    }
+
+    return false;
   }
 
   addComment(e: any): void {
@@ -38,6 +76,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     let comment = this.comment;
     if(comment.body === '') {
       alert('Comment cannot be submitted without text.');
+      return;
     }
 
     this.onSubmitEvent.emit(comment);
