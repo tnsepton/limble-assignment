@@ -1,9 +1,13 @@
 <div class="select-list">
     <h5 *ngIf="title">{{title}}</h5>
     <div class="list-container">
-        <div class="option"
-            *ngFor="let option of options"
-            (click)="selectOption(option.value)"
-        >{{option.label}}</div>
+        <select-list-option
+            *ngFor="let option of options; first as isFirst"
+            [isFirst]="isFirst"
+            [option]="option"
+            (onActivated)="onOptionActivated($event)"
+            [activeOption]="activeOption"
+            (onSelected)="selectOption(option.value)"
+        ></select-list-option>
     </div>
 </div>

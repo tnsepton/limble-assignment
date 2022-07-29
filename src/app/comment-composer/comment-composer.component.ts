@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Comment, emptyComment } from '../comment';
-import { Option } from '../shared/forms/select-list/option';
+import { Option } from '../shared/forms/select-list-option/option';
 import { User } from '../user';
 import { UserService } from '../user.service';
 

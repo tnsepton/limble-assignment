@@ -4,7 +4,6 @@
     <div #composer
         contenteditable
         class="composer"
-        [textContent]="comment.body"
         (input)="handleInput($event)"
         (keydown)="handleKeydown($event)"
     ></div>

@@ -4,6 +4,7 @@ import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { IconTextButtonComponent } from './buttons/icon-text-button.component';
 import { IconButtonComponent } from './buttons/icon-button.component';
 import { SelectListComponent } from './forms/select-list/select-list.component';
+import { SelectListOptionComponent } from './forms/select-list-option/select-list-option.component';
 
 
 
@@ -12,7 +13,8 @@ import { SelectListComponent } from './forms/select-list/select-list.component';
     SvgIconComponent,
     IconTextButtonComponent,
     IconButtonComponent,
-    SelectListComponent
+    SelectListComponent,
+    SelectListOptionComponent
   ],
   imports: [
     CommonModule
@@ -21,7 +23,8 @@ import { SelectListComponent } from './forms/select-list/select-list.component';
     SvgIconComponent,
     IconTextButtonComponent,
     IconButtonComponent,
-    SelectListComponent
+    SelectListComponent,
+    SelectListOptionComponent
   ]
 })
 export class SharedModule { }
