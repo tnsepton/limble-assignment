@@ -19,20 +19,22 @@ hr {
 }
 
 i.icon-container {
-    display: inline-block;
+  float: left;
 }
 
 i.icon-container > svg {
-    display: block;
-    width: auto;
-    height: 1em;
+  display: block;
+  width: auto;
+  height: 1em;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button.main-btn {
+  display: flex;
+  align-items: center;
   padding: 7px 15px 5px;
   font-weight: 600;
   border: none;
