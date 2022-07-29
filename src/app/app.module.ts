@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CommentSectionComponent } from './comment-section/comment-section.component';
@@ -16,6 +17,7 @@ import { CommentComposerComponent } from './comment-composer/comment-composer.co
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     SharedModule
   ],
   providers: [],

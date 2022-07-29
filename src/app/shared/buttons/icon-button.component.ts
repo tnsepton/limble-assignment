@@ -3,7 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'icon-button',
   template: `
-    <button class="icon-button">
+    <button class="icon-button"
+      type={{type}}
+    >
       <svg-icon
         class="no-padding"
         icon={{icon}}
@@ -27,6 +29,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class IconButtonComponent implements OnInit {
   @Input() icon: string = '';
+  @Input() type: string = 'button';
 
   constructor() { }
 

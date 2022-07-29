@@ -1,13 +1,21 @@
-<div class="composer-container">
-    <textarea #composer name="composer" class="composer"></textarea>
+<form class="composer-container"
+    (ngSubmit)="addComment($event);"
+>
+    <textarea #composer
+        required
+        name="comment"
+        class="composer"
+        [(ngModel)]="comment.body"
+        (keypress)="handleKeypress($event)"
+    ></textarea>
     <div class="button-container">
         <icon-button
+            type="submit"
             icon="send"
-            (click)="addComment()"
         ></icon-button>
         <icon-button
             icon="x"
             (click)="closeComposer()"
         ></icon-button>
     </div>
-</div>
+</form>

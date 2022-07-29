@@ -4,7 +4,7 @@
         <span>{{comment.body}}</span>
     </div>
     <div class="details">
-        {{comment.author.name}} - {{comment.createdAt | date:'yyyy/mm/dd h:mm a' }}
+        {{comment.author.name}} - {{comment.createdAt | date:'yyyy/MM/dd h:mm a' }}
     </div>
 </div>
 <hr *ngIf="!isLast">

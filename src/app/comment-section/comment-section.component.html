@@ -17,6 +17,7 @@
             *ngIf="commenting"
             [closeButton]="true"
             (onCloseEvent)="toggleCommentState()"
+            (onSubmitEvent)="addComment($event)"
         ></app-comment-composer>
     </div>
 </div>

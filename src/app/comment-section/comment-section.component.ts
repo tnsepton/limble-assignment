@@ -25,4 +25,9 @@ export class CommentSectionComponent implements OnInit {
     this.commenting = !this.commenting;
   }
 
+  addComment(comment: Comment): void {
+    this.commentService.addComment(comment);
+    this.fetchComments();
+  }
+
 }
