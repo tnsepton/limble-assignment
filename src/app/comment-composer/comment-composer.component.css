@@ -1,0 +1,28 @@
+:host {
+    flex-basis: 100%;
+}
+
+.composer-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.composer {
+    flex-grow: 1;
+    border: none;
+    resize: none;
+    height: 1em;
+    line-height: 1em;
+}
+
+.composer:focus {
+    outline: none;
+}
+
+.button-container {
+    flex-basis: 50px;
+    padding-left: 15px;
+}
