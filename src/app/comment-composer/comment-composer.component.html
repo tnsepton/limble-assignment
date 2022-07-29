@@ -1,6 +1,13 @@
 <div class="composer-container">
     <textarea #composer name="composer" class="composer"></textarea>
     <div class="button-container">
-        <button class="main-btn" (click)="closeComposer()">Close</button>
+        <icon-button
+            icon="send"
+            (click)="addComment()"
+        ></icon-button>
+        <icon-button
+            icon="x"
+            (click)="closeComposer()"
+        ></icon-button>
     </div>
 </div>

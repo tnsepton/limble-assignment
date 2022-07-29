@@ -18,8 +18,22 @@ hr {
   margin: 12px 0;
 }
 
+i.icon-container {
+    display: inline-block;
+}
+
+i.icon-container > svg {
+    display: block;
+    width: auto;
+    height: 1em;
+}
+
+button {
+    cursor: pointer;
+}
+
 button.main-btn {
-  padding: 5px 15px;
+  padding: 7px 15px 5px;
   font-weight: 600;
   border: none;
   border-radius: 5px;

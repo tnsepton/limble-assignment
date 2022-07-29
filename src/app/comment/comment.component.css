@@ -5,6 +5,10 @@
     font-size: 14px;
 }
 
+.body > span {
+    margin-left: 7px;
+}
+
 .details {
     color: #999;
 }

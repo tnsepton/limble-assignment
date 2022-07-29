@@ -18,6 +18,10 @@ export class CommentComposerComponent implements AfterViewInit {
       this.composerElement.nativeElement.focus();
   }
 
+  addComment(): void {
+    return;
+  }
+
   closeComposer(): void {
     this.onCloseEvent.emit();
   }
