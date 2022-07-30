@@ -10,7 +10,7 @@ export class SelectListComponent implements OnInit, OnChanges {
   @Input() options: Option[] = [];
   @Input() title: string = '';
 
-  @Output() onSelect: EventEmitter<any> = new EventEmitter();
+  @Output() onSelected: EventEmitter<any> = new EventEmitter();
 
   activeOption: any;
 
@@ -24,10 +24,10 @@ export class SelectListComponent implements OnInit, OnChanges {
   }
 
   selectOption(value: any): void {
-    this.onSelect.emit(value);
+    this.onSelected.emit(value);
   }
 
-  onOptionActivated(option: any): void {
+  onOptionActivated(option: Option): void {
     this.activeOption = option;
   }
 

@@ -19,6 +19,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
   comment: Comment = emptyComment();
   tagSuggestions: Option[] = [];
+  range: any;
 
   constructor(private userService: UserService) { }
 
@@ -27,7 +28,22 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.focusComposerElement();
+  }
+
+  focusComposerElement(): void {
     this.composerElement.nativeElement.focus();
+
+    let range = this.range;
+    if(range) {
+      let selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }
+
+  setRange(): void {
+    this.range = window.getSelection()?.getRangeAt(0);
   }
 
   setTagSuggestions(tagSuggestions: User[]): void {
@@ -43,6 +59,16 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   handleInput(e: any): void {
+    this.setRange();
+
+    let range = this.range;
+    if(range.startContainer.nodeType !== 3) {
+      let node = document.createTextNode('\u{200B}');
+      range.insertNode(node);
+      range.setEnd(node, 0);
+      range.collapse();
+    }
+
     let tagSearchString = this.getTagSearchString();
     if(typeof tagSearchString === 'string') {
       let tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
@@ -56,7 +82,12 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   getTagSearchString(): string | boolean {
-    let range = window.getSelection()?.getRangeAt(0);
+    let range = this.range;
+
+    if(range.startContainer.nodeType !== 3) {
+      return false;
+    }
+
     let start = range?.startOffset || 0;
     let textContent = range?.startContainer.textContent || '';
     let searchString = '';
@@ -105,7 +136,45 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   tagUser(user: User): void {
-    alert(user.name + ' selected!');
+    this.comment.tagged.push(user.id);
+    this.focusComposerElement();
+    let range = window.getSelection()?.getRangeAt(0) || document.createRange();
+    let start = range.startOffset;
+    let startContainer = range.startContainer;
+    let textContent = startContainer.textContent || '';
+    let pos = start - 1;
+    let char;
+
+    while(pos >= 0) {
+      char = textContent[pos];
+      if(char === '@') {
+        if(pos === 0 || textContent[pos - 1] === ' ') {
+          range.setStart(startContainer, pos);
+          break;
+        }
+      }
+
+      pos--;
+    }
+
+    let node = document.createElement('span');
+    node.className = 'tagged-user';
+    node.textContent = '@' + user.name;
+    node.contentEditable = 'false';
+
+    range.deleteContents();
+    range.insertNode(node);
+    range.collapse();
+
+    node = document.createElement('span');
+    node.textContent = '\u00A0';
+    range.insertNode(node);
+    range.collapse();
+
+    this.resetTagSuggestions();
+  }
+
+  resetTagSuggestions(): void {
     this.setTagSuggestions([]);
   }
 

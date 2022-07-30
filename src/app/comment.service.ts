@@ -14,7 +14,8 @@ export class CommentService {
         author: {
           id: 1,
           name: 'Kevin'
-        }
+        },
+        tagged: []
     },
     {
       id: 2,
@@ -23,7 +24,8 @@ export class CommentService {
       author: {
         id: 2,
         name: 'Jeff'
-      }
+      },
+      tagged: []
     },
     {
       id: 3,
@@ -32,7 +34,8 @@ export class CommentService {
       author: {
         id: 1,
         name: 'Kevin'
-      }
+      },
+      tagged: []
     }
   ]
   private datePipe = new DatePipe('en-US');

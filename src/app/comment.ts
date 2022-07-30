@@ -4,7 +4,8 @@ export interface Comment {
   id: number,
   createdAt: string,
   body: string,
-  author: User
+  author: User,
+  tagged: number[]
 }
 
 export function emptyComment(): Comment {
@@ -15,6 +16,7 @@ export function emptyComment(): Comment {
     author: {
       id: 0,
       name: ''
-    }
+    },
+    tagged: []
   }
 }

@@ -9,9 +9,10 @@ import { emptyOption, Option } from './option';
 export class SelectListOptionComponent implements OnInit, DoCheck {
   @Input() option: Option = emptyOption();
   @Input() isFirst: boolean = false;
-  @Input() activeOption: any;
+  @Input() activeOption: Option = emptyOption();
 
-  @Output() onActivated: EventEmitter<any> = new EventEmitter();
+  @Output() onActivated: EventEmitter<Option> = new EventEmitter();
+  @Output() onSelected: EventEmitter<Option> = new EventEmitter();
 
   isActive: boolean = false;
 
@@ -22,8 +23,9 @@ export class SelectListOptionComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
-    // console.dir(this.activeOption);
-    if(this.activeOption && this.option !== this.activeOption) this.deactivateOption();
+    if(this.activeOption
+      && this.option !== this.activeOption
+    ) this.deactivateOption();
   }
 
   activateOption(): void {
@@ -33,6 +35,10 @@ export class SelectListOptionComponent implements OnInit, DoCheck {
 
   deactivateOption(): void {
     this.isActive = false;
+  }
+
+  selectOption(): void {
+    this.onSelected.emit(this.option.value);
   }
 
 }

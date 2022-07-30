@@ -1,6 +1,7 @@
 <div class="option"
     [class.selected]="isActive"
     (mouseover)="activateOption()"
+    (click)="selectOption()"
 >
     {{option.label}}
 </div>
