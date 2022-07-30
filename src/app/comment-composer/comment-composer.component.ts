@@ -42,10 +42,6 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  setRange(): void {
-    this.range = window.getSelection()?.getRangeAt(0);
-  }
-
   setTagSuggestions(tagSuggestions: User[]): void {
     let options: Option[] = [];
     for(let tagSuggestion of tagSuggestions) {
@@ -60,7 +56,16 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
   handleInput(e: any): void {
     this.setRange();
+    this.ensureWithinTextNode();
+    this.handleTagSuggestions();
+    this.setCommentBody(e);
+  }
 
+  setRange(): void {
+    this.range = window.getSelection()?.getRangeAt(0);
+  }
+
+  ensureWithinTextNode(): void {
     let range = this.range;
     if(range.startContainer.nodeType !== 3) {
       let node = document.createTextNode('\u{200B}');
@@ -68,7 +73,13 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
       range.setEnd(node, 0);
       range.collapse();
     }
+  }
 
+  setCommentBody(e: any): void {
+    this.comment.body = e.target.textContent;
+  }
+
+  handleTagSuggestions(): void {
     let tagSearchString = this.getTagSearchString();
     if(typeof tagSearchString === 'string') {
       let tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
@@ -77,17 +88,10 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     else {
       this.setTagSuggestions([]);
     }
-
-    this.comment.body = e.target.textContent;
   }
 
   getTagSearchString(): string | boolean {
     let range = this.range;
-
-    if(range.startContainer.nodeType !== 3) {
-      return false;
-    }
-
     let start = range?.startOffset || 0;
     let textContent = range?.startContainer.textContent || '';
     let searchString = '';
@@ -138,7 +142,18 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   tagUser(user: User): void {
     this.comment.tagged.push(user.id);
     this.focusComposerElement();
-    let range = window.getSelection()?.getRangeAt(0) || document.createRange();
+    this.insertTagMarkup(user.name);
+    this.resetTagSuggestions();
+  }
+
+  insertTagMarkup(name: string): void {
+    this.setupRangeForTagMarkup();
+    this.insertTagSpan(name);
+    this.insertTextNode();
+  }
+
+  setupRangeForTagMarkup(): void {
+    let range = this.range;
     let start = range.startOffset;
     let startContainer = range.startContainer;
     let textContent = startContainer.textContent || '';
@@ -156,22 +171,31 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
       pos--;
     }
+  }
 
-    let node = document.createElement('span');
-    node.className = 'tagged-user';
-    node.textContent = '@' + user.name;
-    node.contentEditable = 'false';
+  insertTagSpan(name: string): void {
+    let node = this.createTagNode(name);
+    let range = this.range;
 
     range.deleteContents();
     range.insertNode(node);
     range.collapse();
+  }
 
-    node = document.createElement('span');
-    node.textContent = '\u00A0';
+  createTagNode(name: string): Node {
+    let node = document.createElement('span');
+    node.className = 'tagged-user';
+    node.textContent = '@' + name;
+    node.contentEditable = 'false';
+
+    return node;
+  }
+
+  insertTextNode(): void {
+    let range = this.range;
+    let node = document.createTextNode('\u00A0');
     range.insertNode(node);
     range.collapse();
-
-    this.resetTagSuggestions();
   }
 
   resetTagSuggestions(): void {
