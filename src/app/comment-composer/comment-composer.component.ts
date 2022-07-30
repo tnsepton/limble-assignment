@@ -153,15 +153,14 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   tagUser(user: User): void {
-    this.comment.tagged.push(user.id);
     this.focusComposerElement();
-    this.insertTagMarkup(user.name);
+    this.insertTagMarkup(user);
     this.resetTagSuggestions();
   }
 
-  insertTagMarkup(name: string): void {
+  insertTagMarkup(user: User): void {
     this.setupRangeForTagMarkup();
-    this.insertTagSpan(name);
+    this.insertTagSpan(user);
     this.insertTextNode();
   }
 
@@ -184,8 +183,8 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  insertTagSpan(name: string): void {
-    let node = this.createTagNode(name);
+  insertTagSpan(user: User): void {
+    let node = this.createTagNode(user);
     let range = this.range;
 
     range.deleteContents();
@@ -193,10 +192,11 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     range.collapse();
   }
 
-  createTagNode(name: string): Node {
+  createTagNode(user: User): Node {
     let node = document.createElement('span');
     node.className = 'tagged-user';
-    node.textContent = '@' + name;
+    node.id = 'tagged-user-' + user.id;
+    node.textContent = '@' + user.name;
     node.contentEditable = 'false';
 
     return node;
