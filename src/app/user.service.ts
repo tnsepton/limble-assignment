@@ -38,8 +38,7 @@ export class UserService {
     let users: User[] = [];
     search = search.toLowerCase();
 
-    for(let user of this.users)
-    {
+    for(let user of this.users) {
       let name = user.name.toLowerCase();
       if(name.includes(search)) {
         users.push(user);
@@ -47,5 +46,24 @@ export class UserService {
     }
 
     return users;
+  }
+
+  getUserById(userId: number): User | boolean {
+    for(const user of this.users) {
+      if(user.id === userId) {
+        return user;
+      }
+    }
+
+    return false;
+  }
+
+  notifyUser(userId: number): void {
+    const user = this.getUserById(userId);
+    if(typeof user === 'boolean') {
+      return;
+    }
+
+    alert(user.name + ': You have been tagged in a comment!');
   }
 }

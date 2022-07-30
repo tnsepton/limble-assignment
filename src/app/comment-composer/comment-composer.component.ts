@@ -148,14 +148,45 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   addComment(e: any): void {
-    // e.preventDefault();
-    // if(comment.body === '') {
-    //   alert('Comment cannot be submitted without text.');
-    //   return;
-    // }
+    e.preventDefault();
+    if(this.composerElement.nativeElement.textContent === '') {
+      alert('Comment cannot be submitted without text.');
+      return;
+    }
 
-    // this.onSubmitEvent.emit(comment);
-    // this.closeComposer();
+    const comment: Comment = this.prepareComment();
+
+    this.onSubmitEvent.emit(comment);
+    this.closeComposer();
+  }
+
+  prepareComment(): Comment {
+    const comment: Comment = emptyComment();
+    comment.body = this.prepareCommentBody();
+    comment.tagged = this.prepareTaggedUsers();
+
+    return comment;
+  }
+
+  prepareCommentBody(): string {
+    const ele = this.composerElement.nativeElement;
+    let body = ele.textContent;
+    body = body.replace(/&nbsp;/g, ' ');
+    body = body.replace(/&ZeroWidthSpace;/g, '');
+
+    return body;
+  }
+
+  prepareTaggedUsers(): number[] {
+    const ele = this.composerElement.nativeElement;
+    const taggedUsers: number[] = [];
+    for(const child of ele.children) {
+      if(child.className !== 'tagged-user') continue;
+
+      taggedUsers.push(parseInt(child.id.split('-')[2]));
+    }
+
+    return taggedUsers;
   }
 
   closeComposer(): void {

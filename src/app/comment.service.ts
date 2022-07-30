@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Comment } from './comment';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,7 @@ export class CommentService {
   ]
   private datePipe = new DatePipe('en-US');
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   getComments(): Comment[] {
     return this.comments;
@@ -48,13 +49,15 @@ export class CommentService {
 
   addComment(comment: Comment): void {
     comment = this.prepareComment(comment);
+    this.sendTagNotifications(comment);
+
     this.comments.push(comment);
   }
 
   prepareComment(comment: Comment): Comment {
-    let comments = this.comments;
+    const comments = this.comments;
     comment.id = comments[comments.length - 1].id + 1;
-    let createdAt = this.datePipe.transform(Date.now(), 'yyyy-MM-dd hh:mm:ss');
+    const createdAt = this.datePipe.transform(Date.now(), 'yyyy-MM-dd hh:mm:ss');
     comment.createdAt = createdAt || '';
     comment.author = {
       id: 0,
@@ -62,5 +65,11 @@ export class CommentService {
     }
 
     return comment;
+  }
+
+  sendTagNotifications(comment: Comment): void {
+    for(const userId of comment.tagged) {
+      this.userService.notifyUser(userId);
+    }
   }
 }
