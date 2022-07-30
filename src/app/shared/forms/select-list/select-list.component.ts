@@ -17,8 +17,6 @@ export class SelectListComponent implements OnInit, OnChanges, OnDestroy {
   activeOption: Option = emptyOption();
   private keydownEventsSubscription: Subscription = new Subscription();
 
-  constructor() { }
-
   ngOnInit(): void {
     this.activeOption = this.options[0];
     this.keydownEventsSubscription = this.keydownEvents.subscribe((e) => this.handleKeydown(e));

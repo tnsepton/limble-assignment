@@ -35,11 +35,11 @@ export class UserService {
       return this.getUsers();
     }
 
-    let users: User[] = [];
+    const users: User[] = [];
     search = search.toLowerCase();
 
-    for(let user of this.users) {
-      let name = user.name.toLowerCase();
+    for(const user of this.users) {
+      const name = user.name.toLowerCase();
       if(name.includes(search)) {
         users.push(user);
       }

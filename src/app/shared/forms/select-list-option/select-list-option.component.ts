@@ -16,8 +16,6 @@ export class SelectListOptionComponent implements OnInit, DoCheck {
 
   isActive: boolean = false;
 
-  constructor() { }
-
   ngOnInit(): void {
     if(this.isFirst) this.activateOption();
   }

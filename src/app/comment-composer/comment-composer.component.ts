@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Comment, emptyComment } from '../comment';
 import { Option } from '../shared/forms/select-list-option/option';
@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
   templateUrl: './comment-composer.component.html',
   styleUrls: ['./comment-composer.component.css']
 })
-export class CommentComposerComponent implements OnInit, AfterViewInit {
+export class CommentComposerComponent implements AfterViewInit {
   @Input() closeButton: boolean = false;
 
   @Output() onCloseEvent: EventEmitter<any> = new EventEmitter();
@@ -24,10 +24,6 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-
-  }
-
   ngAfterViewInit(): void {
     this.focusComposerElement();
   }
@@ -35,7 +31,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   focusComposerElement(): void {
     this.composerElement.nativeElement.focus();
 
-    let range = this.range;
+    const range = this.range;
     if(range) {
       let selection = window.getSelection();
       selection?.removeAllRanges();
@@ -44,8 +40,8 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   setTagSuggestions(tagSuggestions: User[]): void {
-    let options: Option[] = [];
-    for(let tagSuggestion of tagSuggestions) {
+    const options: Option[] = [];
+    for(const tagSuggestion of tagSuggestions) {
       options.push({
         value: tagSuggestion,
         label: tagSuggestion.name
@@ -66,9 +62,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   ensureWithinTextNode(): void {
-    let range = this.range;
+    const range = this.range;
     if(range.startContainer.nodeType !== 3) {
-      let node = document.createTextNode('\u{200B}');
+      const node = document.createTextNode('\u{200B}');
       range.insertNode(node);
       range.setEnd(node, 0);
       range.collapse();
@@ -76,9 +72,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   handleTagSuggestions(): void {
-    let tagSearchString = this.getTagSearchString();
+    const tagSearchString = this.getTagSearchString();
     if(typeof tagSearchString === 'string') {
-      let tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
+      const tagSuggestions = this.userService.getUsersByNameSearch(tagSearchString);
       this.setTagSuggestions(tagSuggestions);
     }
     else {
@@ -87,9 +83,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   getTagSearchString(): string | boolean {
-    let range = this.range;
-    let start = range?.startOffset || 0;
-    let textContent = range?.startContainer.textContent || '';
+    const range = this.range;
+    const start = range?.startOffset || 0;
+    const textContent = range?.startContainer.textContent || '';
     let searchString = '';
     let char = '';
     let i = 1;
@@ -114,9 +110,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   shouldTag(range: any, textContent: string, pos: number): boolean {
-    let prevSibling = range.startContainer.previousElementSibling;
-    let className = (prevSibling) ? prevSibling.className : '';
-    let char = textContent[pos - 1] || '';
+    const prevSibling = range.startContainer.previousElementSibling;
+    const className = (prevSibling) ? prevSibling.className : '';
+    const char = textContent[pos - 1] || '';
 
     return (
       (pos === 0 && className !== 'tagged-user')
@@ -139,7 +135,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
   shouldSendEvent(e: any): boolean {
     const keycodes = [13, 38, 40];
-    let isArrowOrEnterKey = keycodes.includes(e.which);
+    const isArrowOrEnterKey = keycodes.includes(e.which);
 
     return (
       this.tagSuggestions.length > 0
@@ -220,10 +216,10 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   setupRangeForTagMarkup(): void {
-    let range = this.range;
-    let start = range.startOffset;
-    let startContainer = range.startContainer;
-    let textContent = startContainer.textContent || '';
+    const range = this.range;
+    const start = range.startOffset;
+    const startContainer = range.startContainer;
+    const textContent = startContainer.textContent || '';
     let pos = start - 1;
     let char;
 
@@ -239,8 +235,8 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   insertTagSpan(user: User): void {
-    let node = this.createTagNode(user);
-    let range = this.range;
+    const node = this.createTagNode(user);
+    const range = this.range;
 
     range.deleteContents();
     range.insertNode(node);
@@ -248,7 +244,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   createTagNode(user: User): Node {
-    let node = document.createElement('span');
+    const node = document.createElement('span');
     node.className = 'tagged-user';
     node.id = 'tagged-user-' + user.id;
     node.textContent = '@' + user.name;
@@ -258,8 +254,8 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   insertTextNode(): void {
-    let range = this.range;
-    let node = document.createTextNode('\u00A0');
+    const range = this.range;
+    const node = document.createTextNode('\u00A0');
     range.insertNode(node);
     range.collapse();
   }

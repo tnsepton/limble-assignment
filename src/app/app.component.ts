@@ -9,7 +9,12 @@ import { Component } from '@angular/core';
       <hr>
     </div>
   `,
-  styleUrls: ['./app.component.css']
+  styles: [
+    `#main-container {
+      max-width: 800px;
+      margin: 20px auto;
+    }`
+  ]
 })
 export class AppComponent {
   title = 'limble-assignment';

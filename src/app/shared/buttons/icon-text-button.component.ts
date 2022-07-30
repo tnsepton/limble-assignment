@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'icon-text-button',
@@ -14,12 +14,7 @@ import { Component, Input, OnInit } from '@angular/core';
     }`
   ]
 })
-export class IconTextButtonComponent implements OnInit {
+export class IconTextButtonComponent {
   @Input() icon: string = '';
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

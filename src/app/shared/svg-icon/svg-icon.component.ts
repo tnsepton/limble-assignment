@@ -28,7 +28,7 @@ export class SvgIconComponent implements OnInit {
   }
 
   setSvg(): void {
-    let svg = getSvg(this.icon);
+    const svg = getSvg(this.icon);
     this.svg = this.sanitizer.bypassSecurityTrustHtml(svg);
   }
 
