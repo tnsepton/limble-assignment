@@ -170,9 +170,23 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
   prepareCommentBody(): string {
     const ele = this.composerElement.nativeElement;
-    let body = ele.textContent;
-    body = body.replace(/&nbsp;/g, ' ');
-    body = body.replace(/&ZeroWidthSpace;/g, '');
+    const text = ele.textContent;
+    let body = '';
+
+    for(const char of text) {
+      const charCode = char.charCodeAt(0);
+
+      switch(charCode) {
+        case 160:
+          body += ' ';
+          break;
+        case 8203:
+          body += '';
+          break;
+        default:
+          body += char;
+      }
+    }
 
     return body;
   }

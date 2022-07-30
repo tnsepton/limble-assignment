@@ -7,13 +7,15 @@ import { CommentSectionComponent } from './comment-section/comment-section.compo
 import { CommentComponent } from './comment/comment.component';
 import { SharedModule } from './shared/shared.module';
 import { CommentComposerComponent } from './comment-composer/comment-composer.component';
+import { TaggedUsersPipe } from './tagged-users.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CommentSectionComponent,
     CommentComponent,
-    CommentComposerComponent
+    CommentComposerComponent,
+    TaggedUsersPipe
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,9 @@
 <div class="comment-container">
     <div class="body">
         <svg-icon icon="chatBubble"></svg-icon>
-        <span>{{comment.body}}</span>
+        <span
+            [innerHTML]="comment.body | taggedUsers"
+        ></span>
     </div>
     <div class="details">
         {{comment.author.name}} - {{comment.createdAt | date:'yyyy/MM/dd h:mm a' }}
