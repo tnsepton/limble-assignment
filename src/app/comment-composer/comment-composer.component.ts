@@ -55,6 +55,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   handleInput(e: any): void {
+    console.dir(e);
     this.setRange();
     this.ensureWithinTextNode();
     this.handleTagSuggestions();
@@ -102,7 +103,7 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     while(i <= 25 && pos >= 0) {
       char = textContent[pos];
       if(char === '@') {
-        if(pos === 0 || textContent[pos - 1] === ' ') {
+        if(this.shouldTag(range, textContent, pos)) {
           return searchString;
         }
 
@@ -115,6 +116,18 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     }
 
     return false;
+  }
+
+  shouldTag(range: any, textContent: string, pos: number): boolean {
+    let prevSibling = range.startContainer.previousElementSibling;
+    let className = (prevSibling) ? prevSibling.className : '';
+    let char = textContent[pos - 1] || '';
+
+    return (
+      (pos === 0 && className !== 'tagged-user')
+      || /\s/.test(char)
+      || char.charCodeAt(0) === 8203
+    );
   }
 
   handleKeydown(e: any): void {
@@ -163,10 +176,8 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
     while(pos >= 0) {
       char = textContent[pos];
       if(char === '@') {
-        if(pos === 0 || textContent[pos - 1] === ' ') {
-          range.setStart(startContainer, pos);
-          break;
-        }
+        range.setStart(startContainer, pos);
+        break;
       }
 
       pos--;
