@@ -11,7 +11,7 @@ export class SelectListOptionComponent implements OnInit, DoCheck {
   @Input() isFirst: boolean = false;
   @Input() activeOption: Option = emptyOption();
 
-  @Output() onActivated: EventEmitter<Option> = new EventEmitter();
+  @Output() onMouseover: EventEmitter<Option> = new EventEmitter();
   @Output() onSelected: EventEmitter<Option> = new EventEmitter();
 
   isActive: boolean = false;
@@ -19,17 +19,23 @@ export class SelectListOptionComponent implements OnInit, DoCheck {
   constructor() { }
 
   ngOnInit(): void {
-    if(this.isFirst) this.isActive = true;
+    if(this.isFirst) this.activateOption();
   }
 
   ngDoCheck(): void {
-    if(this.activeOption
-      && this.option !== this.activeOption
-    ) this.deactivateOption();
+    if(this.option !== this.activeOption) {
+      this.deactivateOption();
+      return;
+    }
+
+    this.activateOption();
+  }
+
+  handleMouseover(): void {
+    this.onMouseover.emit(this.option);
   }
 
   activateOption(): void {
-    this.onActivated.emit(this.option);
     this.isActive = true;
   }
 

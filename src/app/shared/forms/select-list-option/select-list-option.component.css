@@ -4,6 +4,6 @@
     cursor: pointer;
 }
 
-.option.selected {
+.option.active {
     background-color: #f5f5f5;
 }

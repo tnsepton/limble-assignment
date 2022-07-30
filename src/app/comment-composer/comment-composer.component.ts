@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Comment, emptyComment } from '../comment';
 import { Option } from '../shared/forms/select-list-option/option';
 import { User } from '../user';
@@ -17,9 +18,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('composer') composerElement!: ElementRef;
 
-  comment: Comment = emptyComment();
   tagSuggestions: Option[] = [];
   range: any;
+  keydownSubject: Subject<any> = new Subject<any>();
 
   constructor(private userService: UserService) { }
 
@@ -55,11 +56,9 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   handleInput(e: any): void {
-    console.dir(e);
     this.setRange();
     this.ensureWithinTextNode();
     this.handleTagSuggestions();
-    this.setCommentBody(e);
   }
 
   setRange(): void {
@@ -74,10 +73,6 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
       range.setEnd(node, 0);
       range.collapse();
     }
-  }
-
-  setCommentBody(e: any): void {
-    this.comment.body = e.target.textContent;
   }
 
   handleTagSuggestions(): void {
@@ -131,21 +126,36 @@ export class CommentComposerComponent implements OnInit, AfterViewInit {
   }
 
   handleKeydown(e: any): void {
+    if(this.shouldSendEvent(e)) {
+      e.preventDefault();
+      this.keydownSubject.next(e);
+      return;
+    }
+
     if(e.which === 13) {
       this.addComment(e);
     }
   }
 
-  addComment(e: any): void {
-    e.preventDefault();
-    let comment = this.comment;
-    if(comment.body === '') {
-      alert('Comment cannot be submitted without text.');
-      return;
-    }
+  shouldSendEvent(e: any): boolean {
+    const keycodes = [13, 38, 40];
+    let isArrowOrEnterKey = keycodes.includes(e.which);
 
-    this.onSubmitEvent.emit(comment);
-    this.closeComposer();
+    return (
+      this.tagSuggestions.length > 0
+      && isArrowOrEnterKey
+    )
+  }
+
+  addComment(e: any): void {
+    // e.preventDefault();
+    // if(comment.body === '') {
+    //   alert('Comment cannot be submitted without text.');
+    //   return;
+    // }
+
+    // this.onSubmitEvent.emit(comment);
+    // this.closeComposer();
   }
 
   closeComposer(): void {

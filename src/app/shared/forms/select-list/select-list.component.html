@@ -5,7 +5,7 @@
             *ngFor="let option of options; first as isFirst"
             [isFirst]="isFirst"
             [option]="option"
-            (onActivated)="onOptionActivated($event)"
+            (onMouseover)="onOptionMouseover($event)"
             [activeOption]="activeOption"
             (onSelected)="selectOption(option.value)"
         ></select-list-option>
